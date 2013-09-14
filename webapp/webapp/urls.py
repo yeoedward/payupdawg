@@ -1,7 +1,6 @@
 from django.conf.urls import patterns, include, url
-from webapp.views import goHome
+from receipts.views import *
 from django.conf import settings
-from django.contrib.auth.views import login, logout
 import os
 
 # Uncomment the next two lines to enable the admin:
@@ -26,6 +25,5 @@ urlpatterns = patterns('',
     {'document_root': settings.STATIC_ROOT,
      'show_indexes': True}),
 
-  (r'^accounts/login/$',  login),
-  (r'^accounts/logout/$', logout),
+  (r'^login/?$', login),
 )
