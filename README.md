@@ -1,4 +1,4 @@
 payupdawg
 =========
 
-Keep track of expenses between room mates
+Keep track of expenses between roommates
