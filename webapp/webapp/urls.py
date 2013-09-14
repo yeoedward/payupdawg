@@ -19,8 +19,12 @@ urlpatterns = patterns('',
     # url(r'^admin/', include(admin.site.urls)),
  
   url(r'^/?$', goHome),
+
   # serve static
   (r'^static/(?P<path>.*)$', 'django.views.static.serve',
     {'document_root': settings.STATIC_ROOT,
      'show_indexes': True}),
+
+  (r'^accounts/login/$',  login),
+  (r'^accounts/logout/$', logout),
 )
