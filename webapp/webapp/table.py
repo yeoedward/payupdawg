@@ -11,7 +11,7 @@ table = []
 table.append(Receipt(name="1", price="5.00", user="Niki"))
 table.append(Receipt(name="2", price="2.00", user='Marisa'))
 
-for x in xrange(0,2):
+for x in xrange(0,len(table)):
     print("You owe " + table[x].user + " $" + table[x].price)
 
 
