@@ -6,15 +6,10 @@ class Receipt(models.Model):
     
     name = models.CharField(max_length = 30)
     date = models.DateField()
-    category = models.ListField(choices=CATEGORY)
-    price = models.FloatField(default=to_some_value)
+    #category = models.ListField(choices=CATEGORY)
+    price = models.FloatField(default=0.00)
     
     #permissions
     user = models.CharField(max_length = 100)
-    groups = models.ListField()
-
-class Group(models.Model):
-    #has read/write permissions
-    admin = models.CharField(max_length=30)
-    members = models.ListField()
+    #groups = models.ListField()
 
