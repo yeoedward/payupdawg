@@ -1,5 +1,7 @@
 from django.conf.urls import patterns, include, url
 from webapp.views import goHome
+from django.conf import settings
+import os
 
 # Uncomment the next two lines to enable the admin:
 # from django.contrib import admin
@@ -16,9 +18,9 @@ urlpatterns = patterns('',
     # Uncomment the next line to enable the admin:
     # url(r'^admin/', include(admin.site.urls)),
  
-    (r'^static/(?P<path>.*)$', 'django.views.static.serve', 
-            {'document_root': '/Users/lindaxli/Desktop/PayUpDawg/'
-                              'payupdawg/webapp/webapp/static/'}),
-
-   url(r'^/?$', goHome),
+  url(r'^/?$', goHome),
+  # serve static
+  (r'^static/(?P<path>.*)$', 'django.views.static.serve',
+    {'document_root': settings.STATIC_ROOT,
+     'show_indexes': True}),
 )
