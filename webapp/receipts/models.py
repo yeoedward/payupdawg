@@ -4,6 +4,7 @@ from django.db import models
 
 #for member-group relationships
 class Dawg(models.Model):
+    username = models.CharField(max_length=30)
     name = models.CharField(max_length=30)
     budget = models.FloatField(default=0.00)
     owe_you = models.FloatField(default=0.00) 

@@ -7,7 +7,6 @@ def get_groups(user_id):
 
 def current_receipts(user_id):
     r = Receipts.objects.filter(owner_equals=user_id)
-
     find_groups = get_groups(user_id)
     for x in find_groups:
         r = chain(r, Receipts.objects.filter(homies_equals=x.name))
