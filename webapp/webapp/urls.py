@@ -26,4 +26,6 @@ urlpatterns = patterns('',
   (r'^register/?$', register),
   (r'^dashboard/?$', dashboard),
   (r'^about/?$', about),
+  (r'^receipts/?$', receipts),
+  (r'^newreceipt/?$', newreceipt),
 )
