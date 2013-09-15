@@ -32,3 +32,6 @@ def register(request):
 
 def dashboard(request):
   return render(request, 'dashboard.html')
+
+def receipts(request):
+    return render(request, 'receipts.html')

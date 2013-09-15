@@ -34,3 +34,11 @@ body {
 	font-size: 15px;
 	text-shadow: 0 0 5px black;
 }
+
+table, td, th{
+border: 1px solid blue;
+}
+
+td, th {
+text-align: center;
+}
