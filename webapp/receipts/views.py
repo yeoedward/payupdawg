@@ -40,17 +40,17 @@ def about(request):
 
 # populate table in request page
 
+#TODO: doesn't work, filter receipts
 def receipts(request):
-  def username(receipt):
-    receipt.owner = receipt.owner.all()[0].username
-    return receipt
-  receipt_list = list(Receipt.objects.all())
+#  def username(receipt):
+#    receipt.owner = receipt.owner.all()[0].username
+#    return receipt
+  receipt_list = list(Receipt.objects.filter(owner__username=request.user.username))
   group_list = list(Homies.objects.filter(dawgs__username__exact=
                                             request.user.username))
-  receip_list = map(username, receipt_list)
+  #receipt_list= map(username, receipt_list)
   return render(request, "receipts.html", {'group_list' : group_list, 
-                          'receipt_list' : receipt_list,
-                          'username' : username})
+                          'receipt_list' : receipt_list})
 # create new receipt
 def newreceipt(request):
   title = request.POST.get('title')
@@ -73,9 +73,33 @@ def groups(request):
 
 def group(request,group_id):
   g = Homies.objects.get(id = group_id)
-  receipt_list = Receipt.objects.filter(groups__id__exact = group_id)
+  receipt_list = Receipt.objects.filter(groups__id__exact = group_id).order_by('-date')
+
+
+  costdict = { }
   sum = 0.0
   for r in receipt_list:
     sum = sum + r.totalPrice
+    temp = r.owner.all()[0].username
+    if temp in costdict:
+      costdict[temp] += r.totalPrice
+    else:
+      costdict[temp] = r.totalPrice
+
+  peopleList = costdict.items()
+
+  peopleL = []
+  for x in peopleList:
+    peopleL += [x]
+
   avg = sum / g.dawgs.count()
-  return render(request, "group.html", {'avg' : avg})
+  people = map(lambda x: x.username,list(g.dawgs.all()))
+
+  for p in people:
+    if (p not in map(lambda (x,_): x, peopleL)):
+      peopleL += [(p,0.0)]
+  peopleL.sort(key=lambda (_,x): x)
+
+  owners = map(lambda r: r.owner.all()[0].username, receipt_list)
+
+  return render(request, "group.html", {'avg' : avg, 'people' : peopleL, 'zipped' : zip(receipt_list,owners)} )

@@ -3,4 +3,39 @@
 {% block title %}My Receipts{% endblock %}
 {% block content %}
 {{ avg }}
+<table>
+
+{% for p in people %}
+<tr>
+<td>
+{{ p.0 }}
+</td>
+<td>
+{{ p.1 }}
+</td>
+</tr>
+{% endfor %}
+</table>
+
+<table cellpadding="10" width="100%" class="expenses">
+<thead>
+	<th> Date </th>
+	<th> Name </th>
+	<th> Category </th>
+  <th> Owner </th>
+	<th> Price </th> 
+</thead>
+
+<!-- WILL ONLY WORK WITH CORRECT GET_RECEIPTS FUNCTION -->
+{% for x in zipped %}
+<tr> 
+	<td> {{ x.0.date }} </td>
+	<td> {{ x.0.title }} </td>
+	<td> {{ x.0.category }}</td>
+  <td> {{ x.1 }} </td>
+  <td color=green> {{ x.0.totalPrice }} </td>
+</tr>
+{% endfor %}
+</table>
+
 {% endblock %}
