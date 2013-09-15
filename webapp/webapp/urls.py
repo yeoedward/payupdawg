@@ -22,5 +22,9 @@ urlpatterns = patterns('',
      'show_indexes': True}),
 
   (r'^login/?$', login),
-  (r'^register/?$', register)
+  (r'^logout/?$', logout),
+  (r'^register/?$', register),
+  (r'^dashboard/?$', dashboard),
+  (r'^receipts/?$', receipts),
+  (r'^newreceipt/?$', newreceipt),
 )

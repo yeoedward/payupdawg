@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% block title %}My Receipts{% endblock %}
+{% block receipts %}active{% endblock %}
+{% block content %}
+<div class="container">
+  <h1>Welcome, {{ user.firstname }}</h1>
+</div>
+
+<table>
+<thead>
+	<th> Date </th>
+	<th> Name </th>
+	<th> Owner </th>
+	<th> Category </th>
+	<th> Balance </th> 
+</thead>
+
+<!-- WILL ONLY WORK WITH CORRECT GET_RECEIPTS FUNCTION -->
+{% for x in receipt_list %}
+<tr> 
+	<td> {{ x.date }} </td>
+	<td> {{ x.title }} </td>
+	<td> {{ x.owner.username }}</td>
+	<td> {{ x.category }}</td>
+	{%if x.owner.username == user.username %}
+		<td color=green> {{ x.totalPrice }} </td>
+	{% else %}
+		<td color=red> {{ x.indPrice }} </td>
+	{% endif %}
+</tr>
+{% endfor %}
+</table>
+
+<form action="newreceipt" method="post">{% csrf_token %}
+<input type="text" name="title" placeholder="Receipt Name">
+<input type="text" name="date" placeholder="Date">
+<input type="text" name="totalPrice" placeholder="Price">
+<input type="text" name="category" placeholder="e.g. Food, Utilities">
+<select name="groups">
+  {% for group in group_list %}
+    <option value="{{ group.id }}">{{ group.name }}</option>
+  {% endfor %}
+</select>
+<button type="submit">Submit</button>
+</form>
+
+{% endblock %}
