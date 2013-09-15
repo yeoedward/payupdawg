@@ -1,15 +1,18 @@
-from django.http import HttpResponse
-import receipts.models
-import itertools 
+from django.shortcuts import render
+from django.contrib import auth
+from django.contrib.auth.forms import UserCreationForm
+from django.http import HttpResponseRedirect
+from receipts.models import *
 
 def get_groups(user_id):
-    return Homies.objects.filter(dawgs__name__equals=user_id)
+    r = Homies.objects.filter(dawgs__name__exact=user_id)
+    return r
 
 def current_receipts(user_id):
-    r = Receipts.objects.filter(owner_equals=user_id)
+    r = Receipt.objects.filter(owner=user_id)
 
 def my_receipts(user_id):
-    return Receipts.objects.filter(owner_equals=user_id)
+    return Receipt.objects.filter(owner=user_id)
 
 def other_receipts(user_id):
     r = []
@@ -34,7 +37,7 @@ def receipts(request, user_id):
 
 def networth(request, user_id):
     for i in current_receipts(user_id):
-        if (i.owner=user_id):
+        if (i.owner==user_id):
             Dawg.objects.get(dawgs_equals=user_id).owes_you += i.price
         else:
             sum = 0
@@ -69,14 +72,14 @@ def payments(dList, cList, answer):
         #debtor owes more money
         if (d + c < 0): 
             dList[0][1] = d + c
-            return [dList[0][0] + "pays" + cList[0][0] + "in full \n"] + payments(dList, cList[1:]]
+            return [dList[0][0] + "pays" + cList[0][0] + "in full \n"] + payments(dList, cList[1:])
         #exact amount owed 
         elif (d - c == 0):
-            return [dList[0][0] + "pays" + cList[0][0] + "in full \n"] + payments(dList[1:], cList[1:]]
+            return [dList[0][0] + "pays" + cList[0][0] + "in full \n"] + payments(dList[1:], cList[1:])
         #collector needs more
         else:
             cList[0][1] = d + c
-            return [dList[0][0] + "pays" + cList[0][0] + "in full \n"] + payments(dList[1:], cList]
+            return [dList[0][0] + "pays" + cList[0][0] + "in full \n"] + payments(dList[1:], cList)
 
 
 def leastTransactions(request):

@@ -47,6 +47,11 @@ body {
   height: 300px;
 }
 
+table, td, th{
+border: 2px solid blue;
+position: center;
+}
+
 td, th {
 text-align: center;
 }

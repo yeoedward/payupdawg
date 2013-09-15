@@ -11,9 +11,15 @@ class Dawg(models.Model):
     you_owe = models.FloatField(default=0.00)
     # pic = models.ImageField()
 
+    def __unicode__(self):
+        return self.username
+
 class Homies(models.Model):
     name = models.CharField(max_length=30)
     dawgs = models.ManyToManyField(Dawg)
+
+    def __unicode__(self):
+        return self.name
 
 class Receipt(models.Model):
     title = models.CharField(max_length=30)
@@ -24,3 +30,8 @@ class Receipt(models.Model):
 
     owner = models.ManyToManyField(Dawg)
     groups = models.ManyToManyField(Homies)
+    
+    def __unicode__(self):
+        return self.title
+
+
