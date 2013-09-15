@@ -19,14 +19,14 @@
 <!-- WILL ONLY WORK WITH CORRECT GET_RECEIPTS FUNCTION -->
 {% for x in receipt_list %}
 <tr> 
-	<td> x.date </td>
-	<td> x.title </td>
-	<td> x.owner </td>
-	<td> x.category </td>
-	{%if x.owner == user.username %}
-		<td color=green> x.totalPrice </td>
+	<td> {{ x.date }} </td>
+	<td> {{ x.title }} </td>
+	<td> {{ x.owner.username }}</td>
+	<td> {{ x.category }}</td>
+	{%if x.owner.username == user.username %}
+		<td color=green> {{ x.totalPrice }} </td>
 	{% else %}
-		<td color=red> x.indPrice </td>
+		<td color=red> {{ x.indPrice }} </td>
 	{% endif %}
 </tr>
 {% endfor %}
