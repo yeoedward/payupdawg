@@ -55,6 +55,32 @@ text-align: center;
   border: 2px solid gray;
 }
 
-.expform {
-  width: 23.2%;
+.grouplist {
+  list-style-type: none;
+  margin: 0;
 }
+
+.grouplist li a {
+  color: black;
+  border-radius: 2px;
+  background: gray;
+  height: 100px;
+  display: block;
+  margin-bottom: 10px;
+  line-height: 40px;
+  padding-left: 40px;
+  padding-top: 45px;
+  background: rgba(220,210,210,0.7);
+}
+
+.grouplist li a:hover {
+  text-decoration: none;
+  background: rgba(220,210,210,0.9);
+}
+
+
+
+
+
+
+

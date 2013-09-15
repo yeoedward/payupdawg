@@ -3,7 +3,8 @@
 {% block title %}My Receipts{% endblock %}
 {% block groups %}active{% endblock %}
 {% block content %}
-<ul>
+<h1><span id="title"> Mah Groups </span></h1>
+<ul class="grouplist">
 {% for group in group_list %}
 <li><a href="group/{{ group.id }}">{{ group.name }}</a></li>
 {% endfor %}
