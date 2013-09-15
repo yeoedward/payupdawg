@@ -1,0 +1,10 @@
+@font-face
+{
+font-family: myFirstFont;
+src: url(../font/streetfon);
+}
+
+div
+{
+font-family:myFirstFont;
+}
