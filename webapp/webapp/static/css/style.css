@@ -27,7 +27,7 @@ body {
 
 .hero-unit.translucent {
    font-size: 20px;
-   font-weight: normal;
+   font-weight: bold;
    color: black;
    text-shadow: 0 0 6px white;
 }
@@ -47,10 +47,6 @@ body {
   height: 300px;
 }
 
-table, td, th{
-border: 2px solid blue;
-position: center;
-}
 
 td, th {
 text-align: center;
