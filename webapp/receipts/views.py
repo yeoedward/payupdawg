@@ -44,6 +44,9 @@ def dashboard(request):
 def about(request):
   return render(request, 'about.html')
 
+def invalid(request):
+  return render(request, 'invalid.html')
+
 
 # populate table in request page
 

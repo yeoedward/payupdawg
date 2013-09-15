@@ -29,13 +29,12 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="brand" href=/>Pay Up Dawg</a>
+          <a class="brand">Pay Up Dawg</a>
           <div class="nav-collapse collapse">
             <ul class="nav">
               <li class="{% block home %}{% endblock %}"><a href="/">Home</a></li>
               {% if user.is_authenticated %}
-              <li class="{% block dash %}{% endblock %}"><a href="/dashboard">Dashboard</a></li>
-              <li class="{% block receipts %}{% endblock %}"><a href="/receipts">My Receipts</a></li>
+              <li class="{% block receipts %}{% endblock %}"><a href="/receipts">My Billz</a></li>
               <li class="{% block groups %}{% endblock %}"><a href="/groups">My Groups</a></li>
               {% endif %}
               <li><a class="{% block about %}{% endblock %}" href="/about">About</a></li>
