@@ -36,11 +36,16 @@ def dashboard(request):
 
 # populate table in request page
 def receipts(request):
+  def username(receipt):
+    receipt.owner = receipt.owner.all()[0].username
+    return receipt
   receipt_list = list(Receipt.objects.all())
   group_list = list(Homies.objects.filter(dawgs__username__exact=
                                             request.user.username))
+  receip_list = map(username, receipt_list)
   return render(request, "receipts.html", {'group_list' : group_list, 
-                          'receipt_list' : receipt_list})
+                          'receipt_list' : receipt_list,
+                          'username' : username})
 # create new receipt
 def newreceipt(request):
   title = request.POST.get('title')
@@ -56,4 +61,16 @@ def newreceipt(request):
   r.save()
   return HttpResponseRedirect("receipts")
 
+def groups(request):
+  group_list = list(Homies.objects.filter(dawgs__username__exact=
+                                            request.user.username))
+  return render(request, "groups.html", {'group_list' : group_list})
 
+def group(request,group_id):
+  g = Homies.objects.get(id = group_id)
+  receipt_list = Receipt.objects.filter(groups__id__exact = group_id)
+  sum = 0.0
+  for r in receipt_list:
+    sum = sum + r.totalPrice
+  avg = sum / g.dawgs.count()
+  return render(request, "group.html", {'avg' : avg})

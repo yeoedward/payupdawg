@@ -21,9 +21,9 @@
 <tr> 
 	<td> {{ x.date }} </td>
 	<td> {{ x.title }} </td>
-	<td> {{ x.owner.username }}</td>
+	<td> {{ x.owner }}</td>
 	<td> {{ x.category }}</td>
-	{%if x.owner.username == user.username %}
+	{%if x.owner == user.username %}
 		<td color=green> {{ x.totalPrice }} </td>
 	{% else %}
 		<td color=red> {{ x.indPrice }} </td>

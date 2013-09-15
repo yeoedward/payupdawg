@@ -27,4 +27,6 @@ urlpatterns = patterns('',
   (r'^dashboard/?$', dashboard),
   (r'^receipts/?$', receipts),
   (r'^newreceipt/?$', newreceipt),
+  (r'^groups/?$', groups),
+  (r'^group/(\d*)/?$', group),
 )

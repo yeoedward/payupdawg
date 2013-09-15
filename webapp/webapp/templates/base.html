@@ -34,11 +34,11 @@
             <ul class="nav">
               <li class="{% block home %}{% endblock %}"><a href="/">Home</a></li>
               {% if user.is_authenticated %}
-              <li class="{% block dash %}{% endblock %}"><a href="dashboard">Dashboard</a></li>
-              <li class="{% block receipts %}{% endblock %}"><a href="receipts">My Receipts</a></li>
-              <li class="{% block groups %}{% endblock %}"><a href="groups">My Groups</a></li>
+              <li class="{% block dash %}{% endblock %}"><a href="/dashboard">Dashboard</a></li>
+              <li class="{% block receipts %}{% endblock %}"><a href="/receipts">My Receipts</a></li>
+              <li class="{% block groups %}{% endblock %}"><a href="/groups">My Groups</a></li>
               {% endif %}
-              <li><a class="{% block about %}{% endblock %}" href="about">About</a></li>
+              <li><a class="{% block about %}{% endblock %}" href="/about">About</a></li>
             </ul>
               {% if user.is_authenticated %}
               <a type="button" href="/logout" class="btn pull-right">Sign out</a>
