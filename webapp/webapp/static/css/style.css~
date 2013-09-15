@@ -1,0 +1,23 @@
+body {
+  padding-top: 60px;
+  padding-bottom: 40px;
+  background-image: url(../bootstrap/img/brickwall.jpg);
+  background-position: center;
+  background-size: 100%;
+}
+
+@font-face
+{
+font-family: streetsoul;
+src: url(../fonts/streetsoul.ttf);
+}
+
+#title
+{
+font-family:streetsoul;
+font-size:100px;
+}
+
+.hero-unit.translucent {
+   background-color: rgba(200,200,200,0.5);
+}
