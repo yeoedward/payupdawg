@@ -36,7 +36,8 @@ body {
 }
 
 table, td, th{
-border: 1px solid blue;
+border: 2px solid blue;
+position: center;
 }
 
 td, th {

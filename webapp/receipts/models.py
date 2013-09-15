@@ -9,7 +9,7 @@ class Dawg(models.Model):
     budget = models.FloatField(default=0.00)
     owe_you = models.FloatField(default=0.00) 
     you_owe = models.FloatField(default=0.00)
-    pic = models.ImageField()
+    #pic = models.ImageField()
 
 class Homies(models.Model):
     name = models.CharField(max_length=30)
