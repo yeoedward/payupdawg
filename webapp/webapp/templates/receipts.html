@@ -14,9 +14,8 @@
 <thead>
 	<th> Date </th>
 	<th> Name </th>
-	<th> Owner </th>
 	<th> Category </th>
-	<th> Balance </th> 
+	<th> Price </th> 
 </thead>
 
 <!-- WILL ONLY WORK WITH CORRECT GET_RECEIPTS FUNCTION -->
@@ -24,14 +23,8 @@
 <tr> 
 	<td> {{ x.date }} </td>
 	<td> {{ x.title }} </td>
-	<td> {{ x.owner }}</td>
 	<td> {{ x.category }}</td>
-	{%if x.owner == user.username %}
-	{% if x.owner.username == user.username %}
-		<td color=green> {{ x.totalPrice }} </td>
-	{% else %}
-		<td color=red> {{ x.indPrice }} </td>
-	{% endif %}
+  <td color=green> {{ x.totalPrice }} </td>
 </tr>
 {% endfor %}
 </table>
