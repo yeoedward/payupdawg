@@ -7,7 +7,7 @@ class Dawg(models.Model):
     name = models.CharField(max_length=30)
     budget = models.FloatField(default=0.00)
     owe_you = models.FloatFied(default=0.00) 
-    you_owe = models.FloatField(default.0.00)
+    you_owe = models.FloatField(default=0.00)
 
 class Homies(models.Model):
     name = models.CharField(max_length=30)
