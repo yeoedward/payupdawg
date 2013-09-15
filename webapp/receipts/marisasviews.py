@@ -17,17 +17,12 @@ def receipts(request, user_id):
     return HttpResponse(html)
 
 def balance(request, user_id):
-    a = []
+    bal = 0
 
     for i in current_receipts(user_id):
-        for x, y in [i]:
-            if a.count(i.user) == 0:
-                a.append(i.user, -1*i.price)
-            else:
-                y = y - i.price
+        if (i.owner=user_id):
+            bal += i.price
+        else:
+            bal -= (i.price)/(len(i.group))
 
-    for u, p in a:
-        if u == user_id:
-            p = -1*p
-
-    return HttpResponse(html)
+    return HttpResponse(bal)
