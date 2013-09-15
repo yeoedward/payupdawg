@@ -44,11 +44,11 @@ def receipts(request):
 def newreceipt(request):
   title = request.POST.get('title')
   date = request.POST.get('date')
-  price = request.POST.get('price')
+  totalPrice = request.POST.get('totalPrice')
   category = request.POST.get('category')
   owner = Dawg.objects.get(username=request.user.username)
   groups = Homies.objects.get(id=request.POST.get('groups'))
-  r = Receipt(title=title, date=date, price=price, category=category)
+  r = Receipt(title=title, date=date, totalPrice=totalPrice, category=category)
   r.save()
   r.owner.add(owner)
   r.groups.add(groups)
