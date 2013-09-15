@@ -3,21 +3,22 @@ import receipts.models
 import itertools 
 
 def get_groups(user_id):
-    return Homies.objects.filter(dawgs_equals=user_id)
+    return Homies.objects.filter(dawgs__name__equals=user_id)
 
 def current_receipts(user_id):
-    r = Receipts.objects.filter(owner_equals=user_id)
-
+    #personal receipts
+    r = Receipts.objects.filter(owner_equals=user_id).filter(list(groups).length == 0)
+    
+    #group receipts
     find_groups = get_groups(user_id)
     for x in find_groups:
-        r = chain(r, Receipts.objects.filter(homies_equals=x.name))
+        r = chain(r, Receipts.objects.filter(homies__name__equals=x.name))
 
 def receipts(request, user_id):
     html = list(current_receipts(user_id))
     return HttpResponse(html)
 
 def networth(request, user_id):
-
     for i in current_receipts(user_id):
         if (i.owner=user_id):
             Dawg.objects.get(dawgs_equals=user_id).owes_you += i.price
@@ -65,7 +66,7 @@ def payments(dList, cList, answer):
 
 
 def leastTransactions(request):
-    u = (list)Users.objects
+    u = list(Dawg.objects.get)
     debt = []
     collect = []
     total = []
