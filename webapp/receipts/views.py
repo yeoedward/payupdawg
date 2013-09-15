@@ -34,7 +34,12 @@ def register(request):
 def dashboard(request):
   return render(request, 'dashboard.html')
 
+def about(request):
+  return render(request, 'about.html')
+
+
 # populate table in request page
+
 def receipts(request):
   def username(receipt):
     receipt.owner = receipt.owner.all()[0].username

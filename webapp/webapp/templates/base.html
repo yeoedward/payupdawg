@@ -29,7 +29,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="brand" href="#">Pay Up Dawg</a>
+          <a class="brand" href=/>Pay Up Dawg</a>
           <div class="nav-collapse collapse">
             <ul class="nav">
               <li class="{% block home %}{% endblock %}"><a href="/">Home</a></li>
@@ -57,13 +57,19 @@
       </div>
     </div>
 
-{% block content %}
-{% endblock %}
+
+<div class="container">
+  <div class="hero-unit translucent">
+    {% block content %}
+    {% endblock %}
+  </div>
+</div>
+
 
 {% block footer %}
 {% endblock %}
 
-<footer>
+<footer class="container">
 <p class="credit">&copy; E-dogg, M-$wag, Big N, L-deezy</p>
 </footer>
 
