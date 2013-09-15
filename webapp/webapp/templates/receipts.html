@@ -4,10 +4,13 @@
 {% block receipts %}active{% endblock %}
 {% block content %}
 <div class="container">
-  <h1>Welcome, {{ user.firstname }}</h1>
-</div>
+  <h1><span id="title">Yo {{ user.username }} </span></h1> 
+  <h1> Here is a table of yo' expenses dawg </h1>
+</div>	
 
-<table>
+<br>
+
+<table cellpadding="10" width="100%" class="expenses">
 <thead>
 	<th> Date </th>
 	<th> Name </th>
@@ -23,7 +26,7 @@
 	<td> {{ x.title }} </td>
 	<td> {{ x.owner.username }}</td>
 	<td> {{ x.category }}</td>
-	{%if x.owner.username == user.username %}
+	{% if x.owner.username == user.username %}
 		<td color=green> {{ x.totalPrice }} </td>
 	{% else %}
 		<td color=red> {{ x.indPrice }} </td>
@@ -32,17 +35,25 @@
 {% endfor %}
 </table>
 
-<form action="newreceipt" method="post">{% csrf_token %}
-<input type="text" name="title" placeholder="Receipt Name">
-<input type="text" name="date" placeholder="Date">
-<input type="text" name="totalPrice" placeholder="Price">
-<input type="text" name="category" placeholder="e.g. Food, Utilities">
-<select name="groups">
-  {% for group in group_list %}
-    <option value="{{ group.id }}">{{ group.name }}</option>
-  {% endfor %}
-</select>
-<button type="submit">Submit</button>
+<br> Enter a new receipt!	
+
+<form action="newreceipt" method="post" width="100%">{% csrf_token %}
+<input type="text" name="title" placeholder="Receipt Name" class="expform"><br>
+<input type="text" name="date" placeholder="Date" class="expform"><br>
+<input type="text" name="totalPrice" placeholder="Price" class="expform"><br>
+<input type="text" name="category" placeholder="e.g. Food, Utilities" class="expform"><br>
+
+
+<div class="form-horizontal">
+	<select name="groups">
+	  {% for group in group_list %}
+	    <option value="{{ group.id }}">{{ group.name }}</option>
+	  {% endfor %}
+	</select>
+
+	<button type="submit" class="btn">Submit</button>
+</div>
+
 </form>
 
 {% endblock %}

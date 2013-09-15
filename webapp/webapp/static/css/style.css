@@ -47,10 +47,14 @@ body {
   height: 300px;
 }
 
-table, td, th{
-border: 1px solid blue;
-}
-
 td, th {
 text-align: center;
+}
+
+.expenses, .expenses td, .expenses th{
+  border: 2px solid gray;
+}
+
+.expform {
+  width: 23.2%;
 }
