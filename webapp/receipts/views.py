@@ -12,16 +12,16 @@ def login(request):
   user = auth.authenticate(username=username, password=password)
   if user is not None and user.is_active:
     auth.login(request, user)
-    return HttpResponseRedirect("/account/loggedin/")
+    return HttpResponseRedirect("loggedin/")
   else:
-    return HttpResponseRedirect("/account/invalid/")
+    return HttpResponseRedirect("invalid/")
 
 def register(request):
   if request.method == 'POST':
     form = UserCreationForm(request.POST)
     if form.is_valid():
       new_user = form.save()
-      return HttpResponseRedirect("/books/")
+      return HttpResponseRedirect("newuser/")
   else:
     form = UserCreationForm()
   return render(request, "register.html", {'form': form})
