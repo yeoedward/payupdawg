@@ -6,7 +6,15 @@ def get_groups(user_id):
     return Homies.objects.filter(dawgs__name__equals=user_id)
 
 def current_receipts(user_id):
-    r = Receipts.objects.filter(owner_equals=user_id)
+
+    #personal receipts
+    r = Receipts.objects.filter(owner_equals=user_id).filter(list(groups).length == 0)
+    
+    #group receipts
+    find_groups = get_groups(user_id)
+    for x in find_groups:
+        r = chain(r, Receipts.objects.filter(homies__name__equals=x.name))
+    return r
 
 def my_receipts(user_id):
     return Receipts.objects.filter(owner_equals=user_id)
@@ -20,6 +28,8 @@ def other_receipts(user_id):
 
 def current_receipts(user_id):
     return chain(my_receipts, other_receipts)
+<<<<<<< HEAD
+=======
     #personal receipts
     r = Receipts.objects.filter(owner_equals=user_id).filter(list(groups).length == 0)
     
@@ -27,6 +37,7 @@ def current_receipts(user_id):
     find_groups = get_groups(user_id)
     for x in find_groups:
         r = chain(r, Receipts.objects.filter(homies__name__equals=x.name))
+>>>>>>> ddbe8d8ade83f4b0c71799ad97fc952d80373ece
 
 def receipts(request, user_id):
     html = list(current_receipts(user_id))
@@ -80,7 +91,7 @@ def payments(dList, cList, answer):
 
 
 def leastTransactions(request):
-    u = list(Dawg.objects.get)
+    u = list(Dawg.objects.all())
     debt = []
     collect = []
     total = []
@@ -101,8 +112,6 @@ def leastTransactions(request):
         for c in collectPerm:
             total +=payments
 
-
-    #might not be always working, is there always a total[0]?
     sum = len(total[0])
     answer = []
     for t in total:
