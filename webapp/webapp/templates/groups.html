@@ -4,15 +4,17 @@
 {% block groups %}active{% endblock %}
 {% block content %}
 
-<form method="post" action="/creategroup">{% csrf_token %}
-New Group:
-<input type ="text" name="name">
-<button type="submit">
-Create Group
-</button>
-</form>
+<div class="form-horizontal">
+	<form method="post" action="/creategroup">{% csrf_token %}
+		New Group:
+		<input type ="text" name="name">
+		<button type="submit" class="btn">
+		Create Group
+		</button>
+	</form>
+</div>
 
-<ul>
+<ul class="grouplist">
 {% for group in group_list %}
 <li><a href="group/{{ group.id }}">{{ group.name }}</a></li>
 {% endfor %}

@@ -3,17 +3,18 @@
 {% block title %}My Receipts{% endblock %}
 {% block content %}
 
+<div class="form-horizontal">
+	<form method="post" action="/addfriend">{% csrf_token %}
+	New Friend:
+	<input type="text" name="username">
+	<input type="hidden" value="{{gid}}" name="gid">
+	<button type="submit" class="btn">
+	Add Friend
+	</button>
+	</form>
+</div>
 
-<form method="post" action="/addfriend">{% csrf_token %}
-New Friend:
-<input type="text" name="username">
-<input type="hidden" value="{{gid}}" name="gid">
-<button type="submit">
-Add Friend
-</button>
-</form>
-
-{{ avg }}
+Average spending per person: ${{ avg }}
 
 
 
@@ -24,16 +25,16 @@ Add Friend
 {% for p in people %}
 <tr>
 <td>
-{{ p.0 }}
+{{ p.0 }}'s Spending:
 </td>
 <td>
-{{ p.1 }}
+${{ p.1 }}
 </td>
 </tr>
 {% endfor %}
 </table>
-
-<table cellpadding="10" width="100%" class="expenses">
+<br>
+<table cellpadding="10" width="100%" class="table table-striped table-bordered expenses">
 <thead>
 	<th> Date </th>
 	<th> Name </th>

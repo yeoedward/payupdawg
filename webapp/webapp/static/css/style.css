@@ -3,7 +3,6 @@ body {
   padding-bottom: 40px;
   background-image: url(../bootstrap/img/brickwall.jpg);
   background-position: center;
-  background-size: 100%;
 }
 
 @font-face {
@@ -22,12 +21,11 @@ body {
 }
 
 .translucent {
-  background-color: rgba(200,200,200,0.7);
+  background-color: rgba(255,255,255,0.85);
 }
 
 .hero-unit.translucent {
    font-size: 20px;
-   font-weight: bold;
    color: black;
    text-shadow: 0 0 6px white;
 }
@@ -52,8 +50,8 @@ td, th {
 text-align: center;
 }
 
-.expenses, .expenses td, .expenses th{
-  border: 2px solid gray;
+.expenses {
+  background: white;
 }
 
 .grouplist {
@@ -64,22 +62,24 @@ text-align: center;
 .grouplist li a {
   color: black;
   border-radius: 2px;
-  background: gray;
+  background: red;
   height: 100px;
   display: block;
   margin-bottom: 10px;
   line-height: 40px;
   padding-left: 40px;
   padding-top: 45px;
-  background: rgba(220,210,210,0.7);
+  background: rgba(230,210,210,0.7);
 }
 
 .grouplist li a:hover {
   text-decoration: none;
-  background: rgba(220,210,210,0.9);
+  background: rgba(230,210,210,0.9);
 }
 
-
+.submit {
+  margin-top: 10px;
+}
 
 
 

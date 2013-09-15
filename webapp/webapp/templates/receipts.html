@@ -10,7 +10,7 @@
 
 <br>
 
-<table cellpadding="10" width="100%" class="expenses">
+<table cellpadding="10" width="100%" class="table table-striped table-bordered expenses">
 <thead>
 	<th> Date </th>
 	<th> Name </th>
@@ -31,10 +31,11 @@
 
 <br> Enter a new receipt!	
 
+
 <form action="newreceipt" method="post" width="100%">{% csrf_token %}
 <input type="text" name="title" placeholder="Receipt Name" class="expform"><br>
-<input type="text" name="date" placeholder="Date" class="expform"><br>
-<input type="text" name="totalPrice" placeholder="Price" class="expform"><br>
+<input type="text" name="date" placeholder="Date" class="expform"> Must be in form YYYY/MM/DD<br>
+<input type="text" name="totalPrice" placeholder="Price" class="expform"> In $<br>
 <input type="text" name="category" placeholder="e.g. Food, Utilities" class="expform"><br>
 
 
@@ -44,8 +45,9 @@
 	    <option value="{{ group.id }}">{{ group.name }}</option>
 	  {% endfor %}
 	</select>
+	Select a group, yo <br> 
 
-	<button type="submit" class="btn">Submit</button>
+	<button type="submit" class="btn submit">Submit</button>
 </div>
 
 </form>
