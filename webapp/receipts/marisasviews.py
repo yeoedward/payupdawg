@@ -18,9 +18,6 @@ def other_receipts(user_id):
         r = chain(r, Receipts.objects.filter(homies_equals=x.name))
     return r
 
-def get_groups(user_id):
-    return Homies.objects.filter(dawgs_equals=user_id)
-
 def current_receipts(user_id):
     return chain(my_receipts, other_receipts)
 

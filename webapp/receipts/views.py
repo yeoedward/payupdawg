@@ -34,13 +34,14 @@ def register(request):
 def dashboard(request):
   return render(request, 'dashboard.html')
 
+# populate table in request page
 def receipts(request):
   receipt_list = list(Receipt.objects.all())
   group_list = list(Homies.objects.filter(dawgs__username__exact=
                                             request.user.username))
   return render(request, "receipts.html", {'group_list' : group_list, 
                           'receipt_list' : receipt_list})
-
+# create new receipt
 def newreceipt(request):
   title = request.POST.get('title')
   date = request.POST.get('date')
@@ -54,3 +55,5 @@ def newreceipt(request):
   r.groups.add(groups)
   r.save()
   return HttpResponseRedirect("receipts")
+
+
