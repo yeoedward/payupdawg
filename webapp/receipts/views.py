@@ -26,6 +26,13 @@ def register(request):
     form = UserCreationForm(request.POST)
     if form.is_valid():
       new_user = form.save()
+      username = request.POST.get('username')
+      d = Dawg(username=username)
+      d.save()
+      password = request.POST.get('password1')
+      user = auth.authenticate(username=username, password=password)
+      if user is not None and user.is_active:
+        auth.login(request,user)
       return HttpResponseRedirect("dashboard")
   else:
     form = UserCreationForm()
@@ -102,4 +109,27 @@ def group(request,group_id):
 
   owners = map(lambda r: r.owner.all()[0].username, receipt_list)
 
-  return render(request, "group.html", {'avg' : avg, 'people' : peopleL, 'zipped' : zip(receipt_list,owners)} )
+  return render(request, "group.html", {'avg' : avg, 'people' : peopleL, 'zipped' : zip(receipt_list,owners),
+                                        'gid' : group_id} )
+
+def creategroup(request):
+  name = request.POST.get('name')
+  g = Homies(name = name)
+  g.save()
+  d = Dawg.objects.get(username=request.user.username)
+  g.dawgs.add(d)
+  g.save()
+  return HttpResponseRedirect("groups")
+
+def addfriend(request):
+  newfriend = request.POST.get('username')
+  gid = request.POST.get('gid')
+  try:
+    d = Dawg.objects.get(username=newfriend)
+  except Exception:
+    return HttpResponseRedirect("/group/"+gid)
+  g = Homies.objects.get(id=gid)
+  g.dawgs.add(d)
+  g.save()
+  return HttpResponseRedirect("/group/"+gid)
+  

@@ -3,6 +3,15 @@
 {% block title %}My Receipts{% endblock %}
 {% block groups %}active{% endblock %}
 {% block content %}
+
+<form method="post" action="/creategroup">{% csrf_token %}
+New Group:
+<input type ="text" name="name">
+<button type="submit">
+Create Group
+</button>
+</form>
+
 <ul>
 {% for group in group_list %}
 <li><a href="group/{{ group.id }}">{{ group.name }}</a></li>

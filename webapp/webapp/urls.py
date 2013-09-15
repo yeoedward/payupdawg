@@ -30,4 +30,7 @@ urlpatterns = patterns('',
   (r'^newreceipt/?$', newreceipt),
   (r'^groups/?$', groups),
   (r'^group/(\d*)/?$', group),
+  (r'^creategroup/?$',creategroup),
+  (r'^addfriend/?$', addfriend)
 )
+
