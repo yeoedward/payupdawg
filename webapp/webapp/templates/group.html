@@ -2,8 +2,24 @@
 
 {% block title %}My Receipts{% endblock %}
 {% block content %}
+
+
+<form method="post" action="/addfriend">{% csrf_token %}
+New Friend:
+<input type="text" name="username">
+<input type="hidden" value="{{gid}}" name="gid">
+<button type="submit">
+Add Friend
+</button>
+</form>
+
 {{ avg }}
+
+
+
+
 <table>
+
 
 {% for p in people %}
 <tr>
