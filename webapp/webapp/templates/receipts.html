@@ -1,14 +1,37 @@
 {% extends 'base.html' %}
-{% block title %}Pay Up Dawg - My Receipts{% endblock %}
+
+{% block title %}My Receipts{% endblock %}
 {% block receipts %}active{% endblock %}
-
 {% block content %}
+<div class="container">
+  <h1>Welcome, {{ user.firstname }}</h1>
+</div>
 
-<ul>
-  {% for receipt in receipt_list %}
-    <li>{{ receipt.title }}</li>
-  {% endfor %}
-</ul>
+<table>
+<thead>
+	<th> Date </th>
+	<th> Name </th>
+	<th> Owner </th>
+	<th> Category </th>
+	<th> Balance </th> 
+</thead>
+
+<!-- WILL ONLY WORK WITH CORRECT GET_RECEIPTS FUNCTION -->
+{% for x in receipt_list %}
+<tr> 
+	<td> x.date </td>
+	<td> x.title </td>
+	<td> x.owner </td>
+	<td> x.category </td>
+	{%if x.owner == user.username %}
+		<td color=green> x.totalPrice </td>
+	{% else %}
+		<td color=red> x.indPrice </td>
+	{% endif %}
+</tr>
+{% endfor %}
+</table>
+
 <form action="newreceipt" method="post">{% csrf_token %}
 <input type="text" name="title" placeholder="Receipt Name">
 <input type="text" name="date" placeholder="Date">
@@ -23,4 +46,3 @@
 </form>
 
 {% endblock %}
-
