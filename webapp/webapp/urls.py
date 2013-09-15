@@ -25,5 +25,5 @@ urlpatterns = patterns('',
   (r'^logout/?$', logout),
   (r'^register/?$', register),
   (r'^dashboard/?$', dashboard),
-  (r'^about/?$', about)
+  (r'^about/?$', about),
 )
