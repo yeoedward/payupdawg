@@ -17,26 +17,10 @@
     </style>
     <link href="../static/bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
 
-<<<<<<< HEAD
     <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
       <script src="../assets/js/html5shiv.js"></script>
     <![endif]-->
-=======
-{% if form.errors %}
-<p class="error">Sorry, that's not a valid username or password</p>
-{% endif %}
-
-<form action="login" method="post">{% csrf_token %}
-<label for="username">User name:</label>
-<input type="text" name="username" value="" id="username">
-<label for="password">Password:</label>
-<input type="password" name="password" value="" id="password">
-
-<input type="submit" value="login" />
-<input type="hidden" name="next" value="{{ next|escape }}" />
-</form>
->>>>>>> dc6e8a9f300c815e67e58665a6bb5e57b93af3cc
 
     <!-- Fav and touch icons -->
     <link rel="apple-touch-icon-precomposed" sizes="144x144" href="../assets/ico/apple-touch-icon-144-precomposed.png">
