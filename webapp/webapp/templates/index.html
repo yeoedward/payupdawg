@@ -1,25 +1,16 @@
-<html>
-<head><title>PayUpDawg Login</title></head>
-<body>
+{% extends 'base.html' %}
+{% block title %}Pay Up Dawg{% endblock %}
+{% block home %}active{% endblock %}
+{% block content %}
 
-<h1>HAIII THEREE</h1>
+  <div class="container">
 
-{% if form.errors %}
-<p class="error">Sorry, that's not a valid username or password</p>
-{% endif %}
+  <!-- Main hero unit for a primary marketing message or call to action -->
+  <div class="hero-unit translucent">
+  <h1><span id="title"><span class="small">Hey yo,</span> Pay Up Dawg!</span></h1> <br>
+  <p>Do you struggle wit payin playas back, biatch? Do you struggle wit other’s never payin you back, biatch? Well wit Pay Up Dawg, you can track whoz ass owes whoz ass paper. </p>
+  <p><a href="#" class="btn btn-primary btn-large">Learn more &raquo;</a></p>
+  </div>
 
-<form action="login" method="post">{% csrf_token %}
-<label for="username">User name:</label>
-<input type="text" name="username" value="" id="username">
-<label for="password">Password:</label>
-<input type="password" name="password" value="" id="password">
-
-<input type="submit" value="login" />
-<input type="hidden" name="next" value="{{ next|escape }}" />
-</form>
-
-<a href="register">SIGN UP NAOOO </a>
-
-
-</body>
-</html>
+  </div> <!-- /container -->
+{% endblock %}

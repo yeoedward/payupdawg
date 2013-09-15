@@ -22,4 +22,3 @@ def receipts(request, user_id):
     html = list(current_receipts(user_id))
     return HttpResponse(html)
 
-
