@@ -66,7 +66,7 @@ def payments(dList, cList, answer):
 
 
 def leastTransactions(request):
-    u = list(Dawg.objects.get)
+    u = list(Dawg.objects.all())
     debt = []
     collect = []
     total = []
@@ -87,8 +87,6 @@ def leastTransactions(request):
         for c in collectPerm:
             total +=payments
 
-
-    #might not be always working, is there always a total[0]?
     sum = len(total[0])
     answer = []
     for t in total:
