@@ -43,7 +43,6 @@ ${{ p.1 }}
 	<th> Price </th> 
 </thead>
 
-<!-- WILL ONLY WORK WITH CORRECT GET_RECEIPTS FUNCTION -->
 {% for x in zipped %}
 <tr> 
 	<td> {{ x.0.date }} </td>
@@ -54,5 +53,10 @@ ${{ p.1 }}
 </tr>
 {% endfor %}
 </table>
+
+Suggested actions:<br>
+{% for t in trans %}
+{{ t }}<br>
+{% endfor %}
 
 {% endblock %}
