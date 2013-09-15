@@ -34,23 +34,26 @@ def register(request):
 def dashboard(request):
   return render(request, 'dashboard.html')
 
+# populate table in request page
 def receipts(request):
   receipt_list = list(Receipt.objects.all())
   group_list = list(Homies.objects.filter(dawgs__username__exact=
                                             request.user.username))
   return render(request, "receipts.html", {'group_list' : group_list, 
                           'receipt_list' : receipt_list})
-
+# create new receipt
 def newreceipt(request):
   title = request.POST.get('title')
   date = request.POST.get('date')
-  price = request.POST.get('price')
+  totalPrice = request.POST.get('totalPrice')
   category = request.POST.get('category')
   owner = Dawg.objects.get(username=request.user.username)
   groups = Homies.objects.get(id=request.POST.get('groups'))
-  r = Receipt(title=title, date=date, price=price, category=category)
+  r = Receipt(title=title, date=date, totalPrice=totalPrice, category=category)
   r.save()
   r.owner.add(owner)
   r.groups.add(groups)
   r.save()
   return HttpResponseRedirect("receipts")
+
+
