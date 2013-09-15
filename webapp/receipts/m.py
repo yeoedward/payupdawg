@@ -9,10 +9,10 @@ def get_groups(user_id):
     return r
 
 def current_receipts(user_id):
-    r = Receipts.objects.filter(owner_equals=user_id)
+    r = Receipt.objects.filter(owner=user_id)
 
 def my_receipts(user_id):
-    return Receipts.objects.filter(owner_equals=user_id)
+    return Receipt.objects.filter(owner=user_id)
 
 def other_receipts(user_id):
     r = []

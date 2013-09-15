@@ -28,7 +28,7 @@ class Receipt(models.Model):
     indPrice = models.FloatField(default=0.00)
     category = models.CharField(max_length=30)
 
-    owner = models.CharField(max_length=30)
+    owner = models.ManyToManyField(Dawg)
     groups = models.ManyToManyField(Homies)
     
     def __unicode__(self):
