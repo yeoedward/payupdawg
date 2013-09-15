@@ -37,13 +37,16 @@ def dashboard(request):
 def about(request):
   return render(request, 'about.html')
 
+
+# populate table in request page
+
 def receipts(request):
   receipt_list = list(Receipt.objects.all())
   group_list = list(Homies.objects.filter(dawgs__username__exact=
                                             request.user.username))
   return render(request, "receipts.html", {'group_list' : group_list, 
                           'receipt_list' : receipt_list})
-
+# create new receipt
 def newreceipt(request):
   title = request.POST.get('title')
   date = request.POST.get('date')
