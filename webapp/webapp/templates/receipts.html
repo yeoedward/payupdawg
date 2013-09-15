@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% block title %}My Receipts{% endblock %}
+{% block receipts %}active{% endblock %}
+{% block content %}
+<div class="container">
+  <h1>Welcome, {{ user.firstname }}</h1>
+</div>
+
+<table>
+<thead>
+	<th> Date </th>
+	<th> Name </th>
+	<th> Owner </th>
+	<th> Category </th>
+	<th> Balance </th> 
+</thead>
+
+<!-- WILL ONLY WORK WITH CORRECT GET_RECEIPTS FUNCTION -->
+{% for x in get_receipts({{ user.username }}) %}
+<tr> 
+	<td> x.date </td>
+	<td> x.title </td>
+	<td> x.owner </td>
+	<td> x.category </td>
+	{%if x.owner == user %}
+		<td color=green> x.totalPrice </td>
+	{% else %}
+		<td color=red> x.indPrice </td>
+	{% endif %}
+</tr>
+{% endfor %}
+</table>
+
+{% endblock %}
