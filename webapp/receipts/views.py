@@ -12,16 +12,23 @@ def login(request):
   user = auth.authenticate(username=username, password=password)
   if user is not None and user.is_active:
     auth.login(request, user)
-    return HttpResponseRedirect("loggedin/")
+    return HttpResponseRedirect("dashboard")
   else:
-    return HttpResponseRedirect("invalid/")
+    return HttpResponseRedirect("invalid")
+
+def logout(request):
+  auth.logout(request) 
+  return HttpResponseRedirect("/")
 
 def register(request):
   if request.method == 'POST':
     form = UserCreationForm(request.POST)
     if form.is_valid():
       new_user = form.save()
-      return HttpResponseRedirect("newuser/")
+      return HttpResponseRedirect("dashboard")
   else:
     form = UserCreationForm()
   return render(request, "register.html", {'form': form})
+
+def dashboard(request):
+  return render(request, 'dashboard.html')
