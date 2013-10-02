@@ -1,4 +1,9 @@
 <?php
+/*
+ *  @author kku
+ *  @comment wrapper class to handle GCM messages
+ */
+
 class GCMHandler{
 	public function __construct(){
 	}
