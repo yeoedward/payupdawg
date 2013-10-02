@@ -1,4 +1,4 @@
-# Django settings for webapp project.
+# Django settings for project.
 import os.path
 
 DEBUG = True
@@ -13,7 +13,7 @@ MANAGERS = ADMINS
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': 'webapp/database',                      # Or path to database file if using sqlite3.
+        'NAME': 'payupdawg/database',                      # Or path to database file if using sqlite3.
         # The following settings are not used with sqlite3:
         'USER': '',
         'PASSWORD': '',
@@ -62,13 +62,12 @@ MEDIA_URL = ''
 # Don't put anything in this directory yourself; store your static files
 # in apps' "static/" subdirectories and in STATICFILES_DIRS.
 # Example: "/var/www/example.com/static/"
-STATIC_ROOT = os.path.join(os.path.dirname(os.path.abspath( __file__ )), 
-                           'static')
+STATIC_ROOT = '~/payupdawg/mainsite/static'
 
 # URL prefix for static files.
 # Example: "http://example.com/static/", "http://static.example.com/"
 # TODO: Change this after uploading to server
-STATIC_URL = '/mystatic/'
+STATIC_URL = '/static/'
 
 # Additional locations of static files
 STATICFILES_DIRS = (
@@ -105,16 +104,17 @@ MIDDLEWARE_CLASSES = (
     # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
 
-ROOT_URLCONF = 'webapp.urls'
+ROOT_URLCONF = 'payupdawg.urls'
 
 # Python dotted path to the WSGI application used by Django's runserver.
-WSGI_APPLICATION = 'webapp.wsgi.application'
+WSGI_APPLICATION = 'payupdawg.wsgi.application'
 
 TEMPLATE_DIRS = (
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
-    os.path.join(os.path.dirname(__file__), 'templates')
+    '/Users/eddy/Dropbox/eddy/programming/hackathon/hackcmufa13/payupdawg/'
+    'mainsite/templates'
 )
 
 INSTALLED_APPS = (
@@ -128,7 +128,7 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
-    'receipts',
+    'mainsite',
 )
 
 SESSION_SERIALIZER = 'django.contrib.sessions.serializers.JSONSerializer'

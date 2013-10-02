@@ -24,7 +24,7 @@ class Homies(models.Model):
 class Receipt(models.Model):
     title = models.CharField(max_length=30)
     date = models.DateField()
-    totalPrice = models.FloatField(default=0.00)
+    totalPrice = models.IntegerField(default=0.00)
     indPrice = models.FloatField(default=0.00)
     category = models.CharField(max_length=30)
 

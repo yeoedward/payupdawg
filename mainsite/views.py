@@ -3,7 +3,7 @@ from django.contrib import auth
 from django.contrib.auth.forms import UserCreationForm
 from django.http import HttpResponseRedirect
 from django.core.exceptions import ValidationError
-from receipts.models import *
+from mainsite.models import *
 
 def goHome(request):
   return render(request, 'index.html')
@@ -56,6 +56,13 @@ def receipts(request):
 #    receipt.owner = receipt.owner.all()[0].username
 #    return receipt
   receipt_list = list(Receipt.objects.filter(owner__username=request.user.username))
+
+  # convert cents to dollars
+  def f(x):
+    x.totalPrice /= 100.0
+    return x
+  receipt_list = map(f, receipt_list)
+
   group_list = list(Homies.objects.filter(dawgs__username__exact=
                                             request.user.username))
   #receipt_list= map(username, receipt_list)
@@ -65,7 +72,10 @@ def receipts(request):
 def newreceipt(request):
   title = request.POST.get('title')
   date = request.POST.get('date')
-  totalPrice = request.POST.get('totalPrice')
+
+  # convert dollars to cents
+  totalPrice = float(request.POST.get('totalPrice')) * 100
+
   category = request.POST.get('category')
   owner = Dawg.objects.get(username=request.user.username)
   try:
@@ -84,6 +94,7 @@ def groups(request):
                                             request.user.username))
   return render(request, "groups.html", {'group_list' : group_list})
 
+# insert tuple into list of tuples, ordered by the first element
 def insert((x,m),L):
   if L == []:
     return [(x,m)]
@@ -115,7 +126,14 @@ def del_eql(L):
     result += [p]
   return (result,trans)
 
+# Wrapper function for matchmaker(). Converts amount spent to a net value w.r.t # avg, sorts the list by amount, and then calls matchmaker
 def matchmake(L):
+  netSpendList = sorted(map(lambda (o,r): (avg-r, o), L), 
+                        key = lambda (n,_): n)
+  return matchmaker(netSpendList)
+
+# TODO
+def matchmaker(L):
   if L is None: return None
   (result,trans) = del_eql(L)
   if len(result) == 0: return result + trans
@@ -127,7 +145,7 @@ def matchmake(L):
   changed_hands = min(abs(n1),abs(n2))
   payer = m1 if n1 > 0 else m2
   payee = m2 if n1 > 0 else m1
-  return trans + [(payer,payee,changed_hands)] + matchmake(insert((new_n,new_m),result))
+  return trans + [(payer,payee,changed_hands)] + matchmaker(insert((new_n,new_m),result))
 
 
 def stringify(L):
@@ -140,40 +158,39 @@ def group(request,group_id):
   receipt_list = Receipt.objects.filter(groups__id__exact = group_id).order_by('-date')
 
 
+  # compute average and generate list of people who paid
   costdict = { }
-  sum = 0.0
+  total = 0
   for r in receipt_list:
-    sum = sum + r.totalPrice
+    total += r.totalPrice
     temp = r.owner.all()[0].username
     if temp in costdict:
       costdict[temp] += r.totalPrice
     else:
       costdict[temp] = r.totalPrice
 
-  peopleList = costdict.items()
+  avg = (total / g.dawgs.count())
 
-  peopleL = []
-  for x in peopleList:
-    peopleL += [x]
+  peopleWhoPaid = costdict.items()
+  allPeople = map(lambda x: x.username,list(g.dawgs.all()))
 
-  avg = sum / g.dawgs.count()
-  people = map(lambda x: x.username,list(g.dawgs.all()))
-
+  # Add those who did not pay into the list with $0 spending
   for p in people:
-    if (p not in map(lambda (x,_): x, peopleL)):
-      peopleL += [(p,0.0)]
-  peopleL.sort(key=lambda (_,x): x)
+    if p not in costdict:
+      peopleWhoPaid += [(p,0)]
+  peopleWhoPaid.sort(key=lambda (_,x): x)
 
-  owners = map(lambda r: r.owner.all()[0].username, receipt_list)
-  zipped = zip(receipt_list, owners)
+  # format it so template can easily extract data
+  table = map(lambda r: (r, r.owner.all()[0].username), receipt_list)
 
-  net_spend = sorted(map(lambda (o,r): (avg-r, o), peopleL), key = lambda (n,_): n)
-  try:
-    transactions = stringify(matchmake(net_spend))
-  except Exception:
-    transactions = None
-  return render(request, "group.html", {'avg' : avg, 'people' : peopleL, 'zipped' : zipped,
-                                        'gid' : group_id, 'trans' : transactions} )
+  transactions = stringify(matchmake(peopleWhoPaid))
+
+  # convert from cents to dollars
+  peopleWhoPaid = map(lambda (p,x): (p, x/100.0), peopleWhoPaid)
+
+  return render(request, "group.html", 
+                {'avg' : avg, 'people' : peopleWhoPaid, 'table' : table,
+                 'gid' : group_id, 'trans' : transactions})
 
 def creategroup(request):
   name = request.POST.get('name')
