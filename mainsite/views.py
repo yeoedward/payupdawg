@@ -55,7 +55,9 @@ def receipts(request):
 #  def username(receipt):
 #    receipt.owner = receipt.owner.all()[0].username
 #    return receipt
-  receipt_list = list(Receipt.objects.filter(owner__username=request.user.username))
+  receipt_list = list(Receipt.objects.filter(owner__username = 
+                                             request.user.username)
+                                     .order_by('-date'))
 
   # convert cents to dollars
   def f(x):
@@ -127,17 +129,22 @@ def del_eql(L):
   return (result,trans)
 
 # Wrapper function for matchmaker(). Converts amount spent to a net value w.r.t # avg, sorts the list by amount, and then calls matchmaker
-def matchmake(L):
-  netSpendList = sorted(map(lambda (o,r): (avg-r, o), L), 
+def matchmake(L, avg):
+  netSpendList = sorted(map(lambda (o,r): (avg - r, o), L), 
                         key = lambda (n,_): n)
   return matchmaker(netSpendList)
 
-# TODO
+# Matches up people with eql amts they owe/are owed.
+# Matches up people who owe or are owed the largest amts
+# Repeat until everyone has settled debts
 def matchmaker(L):
-  if L is None: return None
+  if L == []: return []
   (result,trans) = del_eql(L)
-  if len(result) == 0: return result + trans
-  assert(len(result) > 1)
+  if len(result) == 0: return trans 
+  if len(result) == 1:
+    # rounding error. Someone will lose money.
+    assert(result[0][0] < 0)
+    return trans + result
   (n1,m1) = result.pop()
   (n2,m2) = result.pop(0)
   new_n = n1 + n2
@@ -145,17 +152,26 @@ def matchmaker(L):
   changed_hands = min(abs(n1),abs(n2))
   payer = m1 if n1 > 0 else m2
   payee = m2 if n1 > 0 else m1
-  return trans + [(payer,payee,changed_hands)] + matchmaker(insert((new_n,new_m),result))
+  return trans + [(payer,payee,changed_hands)] + \
+                 matchmaker(insert((new_n,new_m),result))
 
 
+# Converts tuples into strings, with the amounts converted to dollars
 def stringify(L):
   if L is None: return None
-  return map(lambda (a,b,n): a+" pays $"+str(n)+" to "+b+".", L)
-
+  def strng(t):
+    if len(t) == 2:
+      (amt, per) = t
+      return per+" loses "+str(-amt/100.0)+"."
+    else:
+      (a,b,n) = t
+      return a+" pays $"+str(n/100.0)+" to "+b+"."
+  return map(strng, L)
 
 def group(request,group_id):
   g = Homies.objects.get(id = group_id)
-  receipt_list = Receipt.objects.filter(groups__id__exact = group_id).order_by('-date')
+  receipt_list = Receipt.objects.filter(groups__id__exact = group_id)\
+                                .order_by('-date')
 
 
   # compute average and generate list of people who paid
@@ -175,18 +191,22 @@ def group(request,group_id):
   allPeople = map(lambda x: x.username,list(g.dawgs.all()))
 
   # Add those who did not pay into the list with $0 spending
-  for p in people:
+  for p in allPeople:
     if p not in costdict:
       peopleWhoPaid += [(p,0)]
-  peopleWhoPaid.sort(key=lambda (_,x): x)
 
   # format it so template can easily extract data
-  table = map(lambda r: (r, r.owner.all()[0].username), receipt_list)
+  table = map(lambda r: (r, r.owner.all()[0].username, r.totalPrice/100.0), 
+              receipt_list)
 
-  transactions = stringify(matchmake(peopleWhoPaid))
+  transactions = stringify(matchmake(peopleWhoPaid, avg))
 
   # convert from cents to dollars
   peopleWhoPaid = map(lambda (p,x): (p, x/100.0), peopleWhoPaid)
+  avg /= 100.0
+
+  # sort the people who paid in ascending order of amt paid
+  peopleWhoPaid = sorted(peopleWhoPaid, key = lambda (p,x): x)
 
   return render(request, "group.html", 
                 {'avg' : avg, 'people' : peopleWhoPaid, 'table' : table,
