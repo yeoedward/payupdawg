@@ -1,3 +1,5 @@
+# This script populates the database with dummy data for testing purposes
+
 import random
 from mainsite.models import *
 
